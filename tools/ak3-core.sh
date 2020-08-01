@@ -877,9 +877,6 @@ setup_ak() {
   else
     abort "Unable to determine $block partition. Aborting...";
   fi;
-  if [ ! "$no_block_display" ]; then
-    ui_print "$block";
-  fi;
 }
 ###
 
