@@ -34,8 +34,9 @@ set_perm_recursive 0 0 750 750 $ramdisk/init* $ramdisk/sbin;
 
 
 ## AnyKernel boot install
-dump_boot;
+split_boot;
 
-write_boot;
+flash_boot;
+flash_dtbo;
 ## end boot install
 
