@@ -28,6 +28,36 @@ ui_printfile() {
     ui_print "$line";
   done < $1;
 }
+
+# insert_line <file> <if search string> <before|after> <line match string> <inserted line>
+insert_line() {
+  local offset line;
+  if ! grep -q "$2" $1; then
+    case $3 in
+      before) offset=0;;
+      after) offset=1;;
+    esac;
+    line=$((`grep -n "$4" $1 | head -n1 | cut -d: -f1` + offset));
+    if [ -f $1 -a "$line" ] && [ "$(wc -l $1 | cut -d\  -f1)" -lt "$line" ]; then
+      echo "$5" >> $1;
+    else
+      sed -i "${line}s;^;${5}\n;" $1;
+    fi;
+  fi;
+}
+
+ui_print "××××××××××××××××××××××××××××××××××××××××××××××"
+ui_print "                       _  __                        "
+ui_print "            ____  ___ | |/ /_  _______               "
+ui_print "           / __ \/ _ \|   / / / / ___/              "
+ui_print "          / / / /  __/   / /_/ (__  )               "
+ui_print "         /_/ /_/\___/_/|_\__,_/____/                 "
+ui_print "                                                   "
+ui_print "××××××××××××××××××××××××××××××××××××××××××××××"
+ui_print "×       neXus KERNEL by @ImPrashantt         ×"
+ui_print "××××××××××××××××××××××××××××××××××××××××××××××"
+ui_print " "
+ui_print "× Initializing parameters and properties"
 show_progress() { echo "progress $1 $2" >> $OUTFD; }
 file_getprop() { $BB grep "^$2=" "$1" | $BB cut -d= -f2-; }
 find_slot() {
@@ -486,6 +516,59 @@ if [ $? != 0 ]; then
   abort;
 fi;
 
+# Copy add-ons
+if [ -d /data/adb/magisk ]; then
+    ui_print "× Installing neXus Tweaks";
+    $BB mount -o rw,remount -t auto /data 2>/dev/null;
+    SCRIPT=/data/adb/service.d
+    $BB rm -rf $SCRIPT/nexus;
+    $BB mv -f $AKHOME/add-ons/nexus $SCRIPT;
+    chmod 755 $SCRIPT/nexus:
+    $BB mount -o rw,remount -t auto /vendor 2>/dev/null;
+    $BB rm -rf /vendor/etc/init/hw/init.nexus.rc;
+    $BB rm -rf /vendor/etc/thermal-engin*;
+    $BB mv -f $AKHOME/add-ons/lm /vendor/etc/lm;
+    $BB mv -f $AKHOME/add-ons/perf /vendor/etc/perf;
+    $BB mv -f $AKHOME/add-ons/msm_irqbalance.conf /vendor/etc/msm_irqbalance.conf;
+    $BB mv -f $AKHOME/add-ons/powerhint.json /vendor/etc/powerhint.json;
+    $BB mv -f $AKHOME/add-ons/thermal-engine.conf /vendor/etc/thermal-engine.conf;
+    $BB mv -f $AKHOME/add-ons/thermal-engine-camera.conf /vendor/etc/thermal-engine-camera.conf;
+    $BB mv -f $AKHOME/add-ons/thermal-engine-map.conf /vendor/etc/thermal-engine-map.conf;
+    $BB mv -f $AKHOME/add-ons/thermal-engine-normal.conf /vendor/etc/thermal-engine-normal.conf;
+    $BB chmod 644 /vendor/etc/lm/*
+    $BB chmod 644 /vendor/etc/perf/*
+    $BB chmod 644 /vendor/etc/msm_irqbalance.conf
+    $BB chmod 644 /vendor/etc/powerhint.json
+    $BB chmod 644 /vendor/etc/thermal-engine.conf
+    $BB chmod 644 /vendor/etc/thermal-engine-camera.conf
+    $BB chmod 644 /vendor/etc/thermal-engine-map.conf
+    $BB chmod 644 /vendor/etc/thermal-engine-normal.conf
+else
+    ui_print "× Installing neXus Tweaks";
+    $BB mount -o rw,remount -t auto /vendor 2>/dev/null;
+    $BB rm -rf /vendor/etc/init/hw/init.nexus.rc;
+    $BB rm -rf /vendor/etc/thermal-engin*;
+    insert_line /vendor/etc/init/hw/init.qcom.rc "init.nexus.rc" after "import /vendor/etc/init/hw/init.qcom.usb.rc" "import /vendor/etc/init/hw/init.nexus.rc";
+    $BB mv -f $AKHOME/add-ons/init.nexus.rc /vendor/etc/init/hw/init.nexus.rc;
+    $BB mv -f $AKHOME/add-ons/lm /vendor/etc/lm;
+    $BB mv -f $AKHOME/add-ons/perf /vendor/etc/perf;
+    $BB mv -f $AKHOME/add-ons/msm_irqbalance.conf /vendor/etc/msm_irqbalance.conf;
+    $BB mv -f $AKHOME/add-ons/powerhint.json /vendor/etc/powerhint.json;
+    $BB mv -f $AKHOME/add-ons/thermal-engine.conf /vendor/etc/thermal-engine.conf;
+    $BB mv -f $AKHOME/add-ons/thermal-engine-camera.conf /vendor/etc/thermal-engine-camera.conf;
+    $BB mv -f $AKHOME/add-ons/thermal-engine-map.conf /vendor/etc/thermal-engine-map.conf;
+    $BB mv -f $AKHOME/add-ons/thermal-engine-normal.conf /vendor/etc/thermal-engine-normal.conf;
+    $BB chmod 644 /vendor/etc/init/hw/init.nexus.rc
+    $BB chmod 644 /vendor/etc/lm/*
+    $BB chmod 644 /vendor/etc/perf/*
+    $BB chmod 644 /vendor/etc/msm_irqbalance.conf
+    $BB chmod 644 /vendor/etc/powerhint.json
+    $BB chmod 644 /vendor/etc/thermal-engine.conf
+    $BB chmod 644 /vendor/etc/thermal-engine-camera.conf
+    $BB chmod 644 /vendor/etc/thermal-engine-map.conf
+    $BB chmod 644 /vendor/etc/thermal-engine-normal.conf
+fi;
+
 do_modules;
 
 debugging;
@@ -495,4 +578,8 @@ if [ "$(file_getprop anykernel.sh do.cleanup)" == 1 ]; then
   cleanup;
 fi;
 
-ui_print " " " " "Done!";
+ui_print "× Successfully flashed kernel!";
+ui_print "× Thank you for using neXus KERNEL!";
+ui_print "× Powered by AnyKernel3 by @osm0sis";
+ui_print " "
+ui_print "×××××××××××××××××××××××××××××××××××××××××××××××"
