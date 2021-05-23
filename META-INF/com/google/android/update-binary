@@ -520,15 +520,17 @@ fi;
 if [ -d /data/adb/magisk ]; then
     ui_print "× Installing neXus Tweaks";
     $BB mount -o rw,remount -t auto /data 2>/dev/null;
-    SCRIPT=/data/adb/service.d
-    $BB rm -rf $SCRIPT/nexus;
-    $BB mv -f $AKHOME/add-ons/nexus $SCRIPT;
-    chmod 755 $SCRIPT/nexus:
+    Module=/data/adb/modules
+    $BB rm -rf $Module/nexus;
+    $BB mv -f $AKHOME/add-ons/nexus $Module;
+    $BB chmod 755 $Module/nexus/nexus
+    $BB chmod 644 $Module/nexus/service.sh
+    $BB chmod 644 $Module/nexus/module.prop
     $BB mount -o rw,remount -t auto /vendor 2>/dev/null;
     $BB rm -rf /vendor/etc/init/hw/init.nexus.rc;
     $BB rm -rf /vendor/etc/thermal-engin*;
-    $BB mv -f $AKHOME/add-ons/lm /vendor/etc/lm;
-    $BB mv -f $AKHOME/add-ons/perf /vendor/etc/perf;
+    $BB mv -f $AKHOME/add-ons/lm /vendor/etc;
+    $BB mv -f $AKHOME/add-ons/perf /vendor/etc;
     $BB mv -f $AKHOME/add-ons/msm_irqbalance.conf /vendor/etc/msm_irqbalance.conf;
     $BB mv -f $AKHOME/add-ons/powerhint.json /vendor/etc/powerhint.json;
     $BB mv -f $AKHOME/add-ons/thermal-engine.conf /vendor/etc/thermal-engine.conf;
