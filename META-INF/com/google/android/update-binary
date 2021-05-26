@@ -516,61 +516,6 @@ if [ $? != 0 ]; then
   abort;
 fi;
 
-# Copy add-ons
-if [ -d /data/adb/magisk ]; then
-    ui_print "× Installing neXus Tweaks";
-    $BB mount -o rw,remount -t auto /data 2>/dev/null;
-    Module=/data/adb/modules
-    $BB rm -rf $Module/nexus;
-    $BB mv -f $AKHOME/add-ons/nexus $Module;
-    $BB chmod 755 $Module/nexus/nexus
-    $BB chmod 644 $Module/nexus/service.sh
-    $BB chmod 644 $Module/nexus/module.prop
-    $BB mount -o rw,remount -t auto /vendor 2>/dev/null;
-    $BB rm -rf /vendor/etc/init/hw/init.nexus.rc;
-    $BB rm -rf /vendor/etc/thermal-engin*;
-    $BB mv -f $AKHOME/add-ons/lm /vendor/etc;
-    $BB mv -f $AKHOME/add-ons/perf /vendor/etc;
-    $BB mv -f $AKHOME/add-ons/msm_irqbalance.conf /vendor/etc/msm_irqbalance.conf;
-    $BB mv -f $AKHOME/add-ons/powerhint.json /vendor/etc/powerhint.json;
-    $BB mv -f $AKHOME/add-ons/thermal-engine.conf /vendor/etc/thermal-engine.conf;
-    $BB mv -f $AKHOME/add-ons/thermal-engine-camera.conf /vendor/etc/thermal-engine-camera.conf;
-    $BB mv -f $AKHOME/add-ons/thermal-engine-map.conf /vendor/etc/thermal-engine-map.conf;
-    $BB mv -f $AKHOME/add-ons/thermal-engine-normal.conf /vendor/etc/thermal-engine-normal.conf;
-    $BB chmod 644 /vendor/etc/lm/*
-    $BB chmod 644 /vendor/etc/perf/*
-    $BB chmod 644 /vendor/etc/msm_irqbalance.conf
-    $BB chmod 644 /vendor/etc/powerhint.json
-    $BB chmod 644 /vendor/etc/thermal-engine.conf
-    $BB chmod 644 /vendor/etc/thermal-engine-camera.conf
-    $BB chmod 644 /vendor/etc/thermal-engine-map.conf
-    $BB chmod 644 /vendor/etc/thermal-engine-normal.conf
-else
-    ui_print "× Installing neXus Tweaks";
-    $BB mount -o rw,remount -t auto /vendor 2>/dev/null;
-    $BB rm -rf /vendor/etc/init/hw/init.nexus.rc;
-    $BB rm -rf /vendor/etc/thermal-engin*;
-    insert_line /vendor/etc/init/hw/init.qcom.rc "init.nexus.rc" after "import /vendor/etc/init/hw/init.qcom.usb.rc" "import /vendor/etc/init/hw/init.nexus.rc";
-    $BB mv -f $AKHOME/add-ons/init.nexus.rc /vendor/etc/init/hw/init.nexus.rc;
-    $BB mv -f $AKHOME/add-ons/lm /vendor/etc/lm;
-    $BB mv -f $AKHOME/add-ons/perf /vendor/etc/perf;
-    $BB mv -f $AKHOME/add-ons/msm_irqbalance.conf /vendor/etc/msm_irqbalance.conf;
-    $BB mv -f $AKHOME/add-ons/powerhint.json /vendor/etc/powerhint.json;
-    $BB mv -f $AKHOME/add-ons/thermal-engine.conf /vendor/etc/thermal-engine.conf;
-    $BB mv -f $AKHOME/add-ons/thermal-engine-camera.conf /vendor/etc/thermal-engine-camera.conf;
-    $BB mv -f $AKHOME/add-ons/thermal-engine-map.conf /vendor/etc/thermal-engine-map.conf;
-    $BB mv -f $AKHOME/add-ons/thermal-engine-normal.conf /vendor/etc/thermal-engine-normal.conf;
-    $BB chmod 644 /vendor/etc/init/hw/init.nexus.rc
-    $BB chmod 644 /vendor/etc/lm/*
-    $BB chmod 644 /vendor/etc/perf/*
-    $BB chmod 644 /vendor/etc/msm_irqbalance.conf
-    $BB chmod 644 /vendor/etc/powerhint.json
-    $BB chmod 644 /vendor/etc/thermal-engine.conf
-    $BB chmod 644 /vendor/etc/thermal-engine-camera.conf
-    $BB chmod 644 /vendor/etc/thermal-engine-map.conf
-    $BB chmod 644 /vendor/etc/thermal-engine-normal.conf
-fi;
-
 do_modules;
 
 debugging;
