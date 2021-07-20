@@ -4,24 +4,23 @@
 ## AnyKernel setup
 # begin properties
 properties() { '
-kernel.string=ExampleKernel by osm0sis @ xda-developers
+kernel.string= neXus Kernel Flashing ...
 do.devicecheck=1
 do.modules=0
 do.systemless=1
 do.cleanup=1
 do.cleanuponabort=0
-device.name1=maguro
-device.name2=toro
-device.name3=toroplus
-device.name4=tuna
-device.name5=
-supported.versions=
+device.name1=rmx1911
+device.name2=rmx1925
+device.name3=rmx1927
+device.name4=rmx2030
+supported.versions=9 - 12
 supported.patchlevels=
 '; } # end properties
 
 # shell variables
-block=/dev/block/platform/omap/omap_hsmmc.0/by-name/boot;
-is_slot_device=0;
+block=/dev/block/bootdevice/by-name/boot;
+is_slot_device=auto;
 ramdisk_compression=auto;
 
 
