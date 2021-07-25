@@ -55,7 +55,7 @@ ui_print "          / /|  /  __/>  </ /_/ (__  )              "
 ui_print "         /_/ |_/\___/_/|_|\__,_/____/                "
 ui_print "                                                  "
 ui_print "××××××××××××××××××××××××××××××××××××××××××××××"
-ui_print "×       neXus KERNEL by @ImPrashantt         ×"
+ui_print "×       XTREME KERNEL BY @SpiDyX027         ×"
 ui_print "××××××××××××××××××××××××××××××××××××××××××××××"
 ui_print " "
 ui_print "× Initializing parameters and properties"
@@ -516,6 +516,13 @@ PATH="$AKHOME/bin:$PATH" home=$AKHOME $BB ash anykernel.sh $2;
 if [ $? != 0 ]; then
   abort;
 fi;
+
+# Copy init scripts
+$BB mount -o rw,remount -t auto /vendor 2>/dev/null;
+ui_print "× Installing Gaming Scripts";
+insert_line /vendor/etc/init/hw/init.qcom.rc "init.nexus.rc" after "import /vendor/etc/init/hw/init.qcom.usb.rc" "import /vendor/etc/init/hw/init.nexus.rc";
+$BB cp -f $AKHOME/init/init.nexus.rc /vendor/etc/init/hw/init.nexus.rc;
+$BB chmod 644 /vendor/etc/init/hw/init.nexus.rc
 
 do_modules;
 
