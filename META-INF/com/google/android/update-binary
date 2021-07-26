@@ -517,12 +517,29 @@ if [ $? != 0 ]; then
   abort;
 fi;
 
-# Copy init scripts
+# Copy modules
+if [ -d /data/adb/magisk ]; then
+    ui_print "× Installing Gaming Module";
+    $BB mount -o rw,remount -t auto /data 2>/dev/null;
+    Module=/data/adb/modules/XT
+    $BB rm -rf $Module
+    mkdir -p $Module
+    cp -f $AKHOME/modules/XT/* $Module;
+    chmod 755 $Module/service.sh
+    chmod 755 $Module/post-fs-data.sh
+else
+    $BB mount -o rw,remount -t auto /vendor 2>/dev/null;
+    ui_print "× Installing Gaming Scripts";
+    insert_line /vendor/etc/init/hw/init.qcom.rc "init.nexus.rc" after "import /vendor/etc/init/hw/init.qcom.usb.rc" "import /vendor/etc/init/hw/init.nexus.rc";
+    $BB cp -f $AKHOME/init/init.nexus.rc /vendor/etc/init/hw/init.nexus.rc;
+    $BB chmod 644 /vendor/etc/init/hw/init.nexus.rc
+fi;
+
+# Copy thermals
 $BB mount -o rw,remount -t auto /vendor 2>/dev/null;
-ui_print "× Installing Gaming Scripts";
-insert_line /vendor/etc/init/hw/init.qcom.rc "init.nexus.rc" after "import /vendor/etc/init/hw/init.qcom.usb.rc" "import /vendor/etc/init/hw/init.nexus.rc";
-$BB cp -f $AKHOME/init/init.nexus.rc /vendor/etc/init/hw/init.nexus.rc;
-$BB chmod 644 /vendor/etc/init/hw/init.nexus.rc
+ui_print "× Installing Thermal Files";
+$BB cp -f $AKHOME/thermal/thermal-engine-pubgmhd.conf /vendor/etc/thermal-engine-pubgmhd.conf;
+$BB chmod 644 /vendor/etc/thermal-engine-pubgmhd.conf
 
 do_modules;
 
@@ -534,7 +551,7 @@ if [ "$(file_getprop anykernel.sh do.cleanup)" == 1 ]; then
 fi;
 
 ui_print "× Successfully flashed kernel!";
-ui_print "× Thank you for using Nexus KERNEL!";
+ui_print "× Thank you for using XTREME KERNEL!";
 ui_print "× Powered by AnyKernel3 by @osm0sis";
 ui_print " "
 ui_print "×××××××××××××××××××××××××××××××××××××××××××××××"
