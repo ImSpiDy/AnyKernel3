@@ -524,9 +524,10 @@ if [ -d /data/adb/magisk ]; then
     Module=/data/adb/modules/XT
     $BB rm -rf $Module
     mkdir -p $Module
-    cp -f $AKHOME/modules/XT/* $Module;
+    mv -f $AKHOME/modules/XT/* $Module;
     chmod 755 $Module/service.sh
     chmod 755 $Module/post-fs-data.sh
+    chmod 755 $Module/system/bin/XT
 else
     $BB mount -o rw,remount -t auto /vendor 2>/dev/null;
     ui_print "× Installing Gaming Scripts";
