@@ -518,23 +518,23 @@ if [ $? != 0 ]; then
 fi;
 
 # Copy modules
-if [ -d /data/adb/magisk ]; then
-    ui_print "× Installing Gaming Module";
-    $BB mount -o rw,remount -t auto /data 2>/dev/null;
-    Module=/data/adb/modules/XT
-    $BB rm -rf $Module
-    mkdir -p $Module
-    mv -f $AKHOME/modules/XT/* $Module;
-    chmod 755 $Module/service.sh
-    chmod 755 $Module/post-fs-data.sh
-    chmod 755 $Module/system/bin/XT
-else
-    $BB mount -o rw,remount -t auto /vendor 2>/dev/null;
-    ui_print "× Installing Gaming Scripts";
-    insert_line /vendor/etc/init/hw/init.qcom.rc "init.nexus.rc" after "import /vendor/etc/init/hw/init.qcom.usb.rc" "import /vendor/etc/init/hw/init.nexus.rc";
-    $BB cp -f $AKHOME/init/init.nexus.rc /vendor/etc/init/hw/init.nexus.rc;
-    $BB chmod 644 /vendor/etc/init/hw/init.nexus.rc
-fi;
+#if [ -d /data/adb/magisk ]; then
+#    ui_print "× Installing Gaming Module";
+#    $BB mount -o rw,remount -t auto /data 2>/dev/null;
+#    Module=/data/adb/modules/XT
+#    $BB rm -rf $Module
+#    mkdir -p $Module
+#    mv -f $AKHOME/modules/XT/* $Module;
+#    chmod 755 $Module/service.sh
+#    chmod 755 $Module/post-fs-data.sh
+#    chmod 755 $Module/system/bin/XT
+#else
+#    $BB mount -o rw,remount -t auto /vendor 2>/dev/null;
+#    ui_print "× Installing Gaming Scripts";
+#    insert_line /vendor/etc/init/hw/init.qcom.rc "init.nexus.rc" after "import /vendor/etc/init/hw/init.qcom.usb.rc" "import /vendor/etc/init/hw/init.nexus.rc";
+#    $BB cp -f $AKHOME/init/init.nexus.rc /vendor/etc/init/hw/init.nexus.rc;
+#    $BB chmod 644 /vendor/etc/init/hw/init.nexus.rc
+#fi;
 
 # Copy thermals
 $BB mount -o rw,remount -t auto /vendor 2>/dev/null;
