@@ -537,10 +537,10 @@ fi;
 #fi;
 
 # Copy thermals
-$BB mount -o rw,remount -t auto /vendor 2>/dev/null;
-ui_print "× Installing Thermal Files";
-$BB cp -f $AKHOME/thermal/thermal-engine-pubgmhd.conf /vendor/etc/thermal-engine-pubgmhd.conf;
-$BB chmod 644 /vendor/etc/thermal-engine-pubgmhd.conf
+# $BB mount -o rw,remount -t auto /vendor 2>/dev/null;
+# ui_print "× Installing Thermal Files";
+# $BB cp -f $AKHOME/thermal/thermal-engine-pubgmhd.conf /vendor/etc/thermal-engine-pubgmhd.conf;
+# $BB chmod 644 /vendor/etc/thermal-engine-pubgmhd.conf
 
 do_modules;
 
