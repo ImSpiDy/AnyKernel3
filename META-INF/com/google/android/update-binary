@@ -46,17 +46,13 @@ insert_line() {
   fi;
 }
 
-ui_print "××××××××××××××××××××××××××××××××××××××××××××××"
-ui_print "                                                  "
-ui_print "             _   __                               "
-ui_print "            / | / /__  _  ____  _______            "
-ui_print "           /  |/ / _ \| |/_/ / / / ___/              "
-ui_print "          / /|  /  __/>  </ /_/ (__  )              "
-ui_print "         /_/ |_/\___/_/|_|\__,_/____/                "
-ui_print "                                                  "
-ui_print "××××××××××××××××××××××××××××××××××××××××××××××"
-ui_print "×       XTREME KERNEL BY @SpiDyX027         ×"
-ui_print "××××××××××××××××××××××××××××××××××××××××××××××"
+ui_print "××××××××××××××××××××××××××××××××××××××××××××"
+ui_print " "
+ui_print "           aRise Xtreme Kernel              "
+ui_print " "                                            
+ui_print "               By @ImSp1Dy                  "
+ui_print " "
+ui_print "××××××××××××××××××××××××××××××××××××××××××××"
 ui_print " "
 ui_print "× Initializing parameters and properties"
 show_progress() { echo "progress $1 $2" >> $OUTFD; }
@@ -552,7 +548,7 @@ if [ "$(file_getprop anykernel.sh do.cleanup)" == 1 ]; then
 fi;
 
 ui_print "× Successfully flashed kernel!";
-ui_print "× Thank you for using XTREME KERNEL!";
+ui_print "× Thank you for using Xtreme Kernel!";
 ui_print "× Powered by AnyKernel3 by @osm0sis";
 ui_print " "
 ui_print "×××××××××××××××××××××××××××××××××××××××××××××××"
