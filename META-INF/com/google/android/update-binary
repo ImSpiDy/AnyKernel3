@@ -506,6 +506,15 @@ do_versioncheck;
 do_levelcheck;
 
 ui_print "Installing...";
+
+if [ $android_ver != 12 ]; then
+$BB mv $AKHOME/image_b $AKHOME/Image.gz-dtb;
+$BB rm -f $AKHOME/image_a;
+else
+$BB mv $AKHOME/image_a $AKHOME/Image.gz-dtb;
+$BB rm -f $AKHOME/image_b;
+fi;
+
 CORE=$($BB grep -oE 'ak.*core.sh' anykernel.sh);
 [ -f tools/$CORE ] || $BB ln -s $AKHOME/tools/ak*-core.sh $AKHOME/tools/$CORE;
 PATH="$AKHOME/bin:$PATH" home=$AKHOME $BB ash anykernel.sh $2;
