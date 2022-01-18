@@ -507,7 +507,7 @@ do_levelcheck;
 
 ui_print "Installing...";
 
-if [ $android_ver != 12 ]; then
+if [ $android_ver -le 11 ] && [ -f /system_root/system/product/build.prop ]; then
 $BB mv $AKHOME/image_b $AKHOME/Image.gz-dtb;
 $BB rm -f $AKHOME/image_a;
 else
