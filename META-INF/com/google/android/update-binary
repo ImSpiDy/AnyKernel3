@@ -49,7 +49,7 @@ insert_line() {
 
 
 ui_print "×××××××××××××××××××××××××××××××××××××××××××××××"
-ui_print "×              aRise Kernel Lavender              ×"
+ui_print "×              Nexus Xtreme Kernel             ×"
 ui_print "×××××××××××××××××××××××××××××××××××××××××××××××"
 ui_print " "
 ui_print "× Initializing parameters and properties"
