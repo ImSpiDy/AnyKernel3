@@ -4,8 +4,8 @@
 ## AnyKernel setup
 # begin properties
 properties() { '
-kernel.string=
-do.devicecheck=1
+kernel.string=NexusKernel
+do.devicecheck=0
 do.modules=0
 do.systemless=1
 do.cleanup=1
@@ -16,8 +16,8 @@ supported.patchlevels=
 '; } # end properties
 
 # shell variables
-block=;
-is_slot_device=0;
+block=/dev/block/bootdevice/by-name/boot;
+is_slot_device=auto;
 ramdisk_compression=auto;
 patch_vbmeta_flag=auto;
 
