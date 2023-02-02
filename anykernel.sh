@@ -27,7 +27,14 @@ patch_vbmeta_flag=auto;
 . tools/ak3-core.sh;
 
 # boot install
-dump_boot; # use split_boot to skip ramdisk unpack, e.g. for devices with init_boot ramdisk
+dump_boot;  # use split_boot to skip ramdisk unpack, e.g. for devices with init_boot ramdisk
+
+ver="$(file_getprop /system/build.prop ro.build.version.release)"
+if [ ! -z "$ver" ]; then
+  patch_cmdline "androidboot.version" "androidboot.version=$ver"
+else
+  patch_cmdline "androidboot.version" ""
+fi
 
 write_boot; # use flash_boot to skip ramdisk repack, e.g. for devices with init_boot ramdisk
 ## end boot install
