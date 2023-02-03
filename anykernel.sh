@@ -5,12 +5,12 @@
 # begin properties
 properties() { '
 kernel.string=Sonix Kernel by ImSpiDy @ GitHub
-do.devicecheck=1
+do.devicecheck=0
 do.modules=0
 do.systemless=1
 do.cleanup=1
 do.cleanuponabort=0
-device.name1=lavender
+device.name1=
 supported.versions=
 supported.patchlevels=
 '; } # end properties
