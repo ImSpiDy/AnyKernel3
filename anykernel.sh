@@ -36,23 +36,20 @@ else
   patch_cmdline "androidboot.version" ""
 fi
 
-ui_print " "
-
 case "$ZIPFILE" in
   *k1*|*K1*)
-    ui_print "• Enabled Sonix Battery Mode "
+    ui_print " " "• Enabled Sonix Battery Mode "
     patch_cmdline "androidboot.sonix" "androidboot.sonix=1"
     ;;
   *k2*|*K2*)
-    ui_print "• Enabled Sonix Performance Mode "
+    ui_print " " "• Enabled Sonix Efficient Mode "
     patch_cmdline "androidboot.sonix" "androidboot.sonix=2"
     ;;
   *k3*|*K3*)
-    ui_print "• Enabled Sonix Gaming Mode "
+    ui_print " " "• Enabled Sonix Gaming Mode "
     patch_cmdline "androidboot.sonix" "androidboot.sonix=3"
     ;;
   *)
-    ui_print "• Enabled Sonix Balance Mode "
     patch_cmdline "androidboot.sonix" ""
     ;;
 esac
